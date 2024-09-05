@@ -25,7 +25,7 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324
 
 
-2- Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
+3- Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
     create database ligas;
 ```
@@ -33,11 +33,11 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
     use ligas;
 ```
 
-3- Crear la tabla  principal donde cargaremos todos los datos de nuestro archivo csv
+4- Crear la tabla  principal donde cargaremos todos los datos de nuestro archivo csv
 
 ```sql
     CREATE TABLE jugadores (
- jug_cod VARCHAR(255) NOT NULL PRIMARY KEY,
+ jug_cod INT NOT NULL PRIMARY KEY,
  jug_nombre VARCHAR(255) NOT NULL,
  jug_nacionalidad VARCHAR(255) NOT NULL,
  jug_posicion VARCHAR(255) NOT NULL,
@@ -72,12 +72,29 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
  );
 
 ```
-4- Cargar los datos del archivo csv
+5- Cargar los datos del archivo csv
 ```sql
 LOAD DATA INFILE 'C:\\ligas\\Gestion-BaseDeDatos.csv'
 INTO TABLE jugadores 
 FIELDS TERMINATED BY ';' 
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
+```
+6- Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores*
+
+*Posicion*
+```sql
+create table posicion(
+pos_cod int not null auto_increment primary key,
+pos_descrip varchar(255) not null
+);
+```
+
+7- Rellenar las tablas con los datos que tenga nuestra tabla principal
+
+*Posicion*
+```sql
+INSERT INTO posicion (pos_nom)
+SELECT DISTINCT jug_Pos FROM jugadores;
 ```
 
