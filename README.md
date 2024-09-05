@@ -115,6 +115,12 @@ CREATE TABLE nacionalidad(
 nac_cod int not null auto_increment primary KEY,
 nac_abrev VARCHAR(255) NOT NULL,
 nac_nombre varchar(255) not null
+
+INSERT INTO nacionalidad (nac_abrev, nac_nombre)
+SELECT DISTINCT 
+    SUBSTRING(jug_nacionalidad, 1, LOCATE(' ', jug_nacionalidad) - 1) AS abreviatura,
+    SUBSTRING(jug_nacionalidad, LOCATE(' ', jug_nacionalidad) + 1) AS nombre
+FROM jugadores
 );
 ```
 7- 
