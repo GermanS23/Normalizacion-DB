@@ -73,5 +73,11 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
 
 ```
 4- Cargar los datos del archivo csv
-
+```sql
+LOAD DATA INFILE 'C:\\ligas\\Gestion-BaseDeDatos.csv'
+INTO TABLE jugadores 
+FIELDS TERMINATED BY ';' 
+LINES TERMINATED BY '\n' 
+IGNORE 1 ROWS;
+```
 
