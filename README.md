@@ -80,7 +80,7 @@ FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
 ```
-6- Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores*
+6- Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores* e inserción de datos 
 
 *Posicion*
 ```sql
@@ -88,12 +88,6 @@ create table posicion(
 pos_cod int not null auto_increment primary key,
 pos_descrip varchar(255) not null
 );
-```
-
-7- Rellenar las tablas con los datos que tenga nuestra tabla principal
-
-*Posicion*
-```sql
 INSERT INTO posicion (pos_nom)
 SELECT DISTINCT jug_Pos FROM jugadores;
 ```
