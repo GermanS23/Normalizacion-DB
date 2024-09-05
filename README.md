@@ -20,10 +20,10 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 
 ## Paso a Paso para la normalización de un archivo csv
 
-1- Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará el siguiente:
-*
+1- Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará:
+
 https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324
-*
+
 
 2- Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
@@ -37,7 +37,7 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
 
 ```sql
     CREATE TABLE jugadores (
- jug_cod int NOT NULL PRIMARY KEY,
+ jug_cod VARCHAR(255) NOT NULL PRIMARY KEY,
  jug_nombre VARCHAR(255) NOT NULL,
  jug_nacionalidad VARCHAR(255) NOT NULL,
  jug_posicion VARCHAR(255) NOT NULL,
