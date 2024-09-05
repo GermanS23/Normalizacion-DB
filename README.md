@@ -27,10 +27,10 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
 
 2- Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
-    create database futbol;
+    create database ligas;
 ```
 ```sql
-    use futbol;
+    use ligas;
 ```
 
 3- Crear la tabla  principal donde cargaremos todos los datos de nuestro archivo csv
