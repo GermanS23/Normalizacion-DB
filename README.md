@@ -80,15 +80,41 @@ FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
 ```
-6- Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores* e inserción de datos 
+6- Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores* e inserción de datos en las tablas 
 
 *Posicion*
 ```sql
-create table posicion(
+CREATE TABLE posicion(
 pos_cod int not null auto_increment primary key,
 pos_descrip varchar(255) not null
-);
-INSERT INTO posicion (pos_nom)
-SELECT DISTINCT jug_Pos FROM jugadores;
-```
 
+INSERT INTO posicion (pos_descrip)
+SELECT DISTINCT
+   	SUBSTRING_INDEX(jug_posicion, ',', -1)
+FROM jugadores;
+);
+
+CREATE TABLE equipos(
+equip_cod int not null auto_increment primary key,
+equip_nombre varchar(255) not null
+
+INSERT INTO equipos (equip_nombre)
+SELECT DISTINCT jug_equipo FROM jugadores;
+);
+
+CREATE TABLE competicion(
+comp_cod int not null auto_increment primary key,
+comp_nombre varchar(255) not null
+
+INSERT INTO competicion (comp_nombre)
+SELECT DISTINCT
+   	SUBSTRING_INDEX(jug_competicion, ' ', -2)
+FROM jugadores);
+
+CREATE TABLE nacionalidad(
+nac_cod int not null auto_increment primary KEY,
+nac_abrev VARCHAR(255) NOT NULL,
+nac_nombre varchar(255) not null
+);
+```
+7- 
