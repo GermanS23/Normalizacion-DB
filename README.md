@@ -108,11 +108,11 @@ SELECT DISTINCT jug_equipo FROM jugadores;
 CREATE TABLE competicion(
 comp_cod int not null auto_increment primary key,
 comp_nombre varchar(255) not null
-
+);
 INSERT INTO competicion (comp_nombre)
 SELECT DISTINCT
    	SUBSTRING_INDEX(jug_competicion, ' ', -2)
-FROM jugadores);
+FROM jugadores;
 ```
 *Nacionalidad*
 ```sql
@@ -120,12 +120,11 @@ CREATE TABLE nacionalidad(
 nac_cod int not null auto_increment primary KEY,
 nac_abrev VARCHAR(255) NOT NULL,
 nac_nombre varchar(255) not null
-
+);
 INSERT INTO nacionalidad (nac_abrev, nac_nombre)
 SELECT DISTINCT 
     SUBSTRING(jug_nacionalidad, 1, LOCATE(' ', jug_nacionalidad) - 1) AS abreviatura,
     SUBSTRING(jug_nacionalidad, LOCATE(' ', jug_nacionalidad) + 1) AS nombre
-FROM jugadores
-);
+FROM jugadores;
 ```
 7- 
