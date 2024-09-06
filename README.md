@@ -127,4 +127,88 @@ SELECT DISTINCT
     SUBSTRING(jug_nacionalidad, LOCATE(' ', jug_nacionalidad) + 1) AS nombre
 FROM jugadores;
 ```
-7- 
+
+*Tabla intermedio para la relación de muchos a muchos entre Jugadores y Posicion*
+```sql
+    CREATE TABLE jugador_posicion (
+    jp_jug_cod INT NOT NULL,
+    jp_pos_cod INT NOT NULL,
+    PRIMARY KEY (jp_jug_cod, jp_pos_cod),
+    FOREIGN KEY (jp_jug_cod) REFERENCES jugadores(jug_cod),
+    FOREIGN KEY (jp_pos_cod) REFERENCES posicion(pos_cod)
+);
+```
+
+*Carga de datos a la tabla intermedio, con el objetivo de que se carguen los codigos del jugador y las distintas posiciones que tenga"
+```sql
+    INSERT INTO jugador_posicion (jp_jug_cod, jp_pos_cod)
+        SELECT 
+            jug_cod,
+                (
+                    SELECT pos_cod FROM posicion WHERE pos_descrip = SUBSTRING_INDEX(jug_posicion, ',', 1)
+                )
+        FROM 
+            jugadores
+        WHERE 
+            jug_posicion LIKE '%,%'
+        UNION ALL
+        SELECT 
+            jug_cod,
+                (
+                    SELECT pos_cod FROM posicion WHERE pos_descrip = SUBSTRING_INDEX(jug_posicion, ',', -1)
+                )
+        FROM 
+            jugadores
+        WHERE 
+            jug_posicion LIKE '%,%'
+        UNION ALL
+        SELECT 
+            jug_cod,
+                (
+                    SELECT pos_cod FROM posicion WHERE pos_descrip = jug_posicion
+                )
+        FROM 
+            jugadores
+        WHERE 
+            jug_posicion NOT LIKE '%,%';
+```
+7- Creación y Modificación de las tablas existentes de la tabla principal jugadores
+    a- Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio
+        ```sql
+            ALTER TABLE jugadores ADD COLUMN jug_pos_temp VARCHAR(255) after jug_nacionalidad;
+        ```
+    b- Carga de datos a la tabla temporal
+       ```sql
+           UPDATE jugadores
+            SET jug_pos_temp = (
+                SELECT GROUP_CONCAT(jp_pos_cod SEPARATOR ',') 
+                FROM jugador_posicion
+                WHERE jp_jug_cod = jugadores.jug_cod
+            );
+       ```
+       c- Eliminamos la tabla original "jug_posicion" y transformamos la temporal en la nueva original.
+           ```sql
+               ALTER TABLE jugadores DROP COLUMN jug_posicion
+            ```
+            ```sql
+                ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
+            ```
+8- Consultas
+    a- Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
+       ```sql 
+            SELECT 
+                j.jug_cod, 
+                j.jug_nombre, 
+                GROUP_CONCAT(DISTINCT p.pos_descrip ORDER BY p.pos_descrip SEPARATOR ', ') AS posiciones
+            FROM 
+                jugadores j
+            JOIN 
+                jugador_posicion jp ON j.jug_cod = jp.jp_jug_cod
+            JOIN 
+                posicion p ON jp.jp_pos_cod = p.pos_cod
+            GROUP BY 
+                j.jug_cod, j.jug_nombre
+            ORDER BY
+                j.jug_cod;
+        ```
+
