@@ -87,12 +87,11 @@ IGNORE 1 ROWS;
 CREATE TABLE posicion(
 pos_cod int not null auto_increment primary key,
 pos_descrip varchar(255) not null
-
+);
 INSERT INTO posicion (pos_descrip)
 SELECT DISTINCT
    	SUBSTRING_INDEX(jug_posicion, ',', -1)
 FROM jugadores;
-);
 ```
 *Equipos*
 ```sql
