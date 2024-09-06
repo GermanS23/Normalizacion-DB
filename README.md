@@ -93,7 +93,9 @@ SELECT DISTINCT
    	SUBSTRING_INDEX(jug_posicion, ',', -1)
 FROM jugadores;
 );
-
+```
+*Equipos*
+```sql
 CREATE TABLE equipos(
 equip_cod int not null auto_increment primary key,
 equip_nombre varchar(255) not null
@@ -101,7 +103,9 @@ equip_nombre varchar(255) not null
 INSERT INTO equipos (equip_nombre)
 SELECT DISTINCT jug_equipo FROM jugadores;
 );
-
+```
+*Competicion*
+```sql
 CREATE TABLE competicion(
 comp_cod int not null auto_increment primary key,
 comp_nombre varchar(255) not null
@@ -110,7 +114,9 @@ INSERT INTO competicion (comp_nombre)
 SELECT DISTINCT
    	SUBSTRING_INDEX(jug_competicion, ' ', -2)
 FROM jugadores);
-
+```
+*Nacionalidad*
+```sql
 CREATE TABLE nacionalidad(
 nac_cod int not null auto_increment primary KEY,
 nac_abrev VARCHAR(255) NOT NULL,
