@@ -172,12 +172,12 @@ FROM jugadores;
         WHERE 
             jug_posicion NOT LIKE '%,%';
 ```
-7- Creación y Modificación de las tablas existentes de la tabla principal jugadores
-    ### a- Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio
+7- Creación y Modificación de las tablas existentes de la tabla principal jugadores.
+    - a. Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio.
         ```sql
             ALTER TABLE jugadores ADD COLUMN jug_pos_temp VARCHAR(255) after jug_nacionalidad;
         ```
-    ### b- Carga de datos a la tabla temporal
+    - b. Carga de datos a la tabla temporal
        ```sql
            UPDATE jugadores
             SET jug_pos_temp = (
@@ -186,7 +186,7 @@ FROM jugadores;
                 WHERE jp_jug_cod = jugadores.jug_cod
             );
        ```
-      ### c- Eliminamos la tabla original "jug_posicion" y transformamos la temporal en la nueva original.
+      - c. Eliminamos la tabla original "jug_posicion" y transformamos la temporal en la nueva original.
            ```sql
                ALTER TABLE jugadores DROP COLUMN jug_posicion
             ```
