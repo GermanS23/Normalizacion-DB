@@ -205,7 +205,8 @@ FROM jugadores;
     ```
 
    ```sql
-       UPDATE jugadores SET jug_nac_temp = (  SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,  LOCATE(' ', jug_nacionalidad)             -1)     )     where jug_cod > 0;
+       UPDATE jugadores SET jug_nac_temp = (SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,
+       LOCATE(' ', jug_nacionalidad)-1)) WHERE jug_cod > 0;
    ```
    
    ```sql
@@ -227,7 +228,8 @@ FROM jugadores;
    ```
    
    ```sql
-       UPDATE jugadores SET jug_equipos_temp = ( SELECT equip_cod FROM equipos WHERE equip_nombre = jugadores.jug_equipo) WHERE jug_cod > 0;
+       UPDATE jugadores SET jug_equipos_temp = (SELECT equip_cod FROM equipos WHERE equip_nombre = jugadores.jug_equipo)
+       WHERE jug_cod > 0;
    ```
    
    ```sql
