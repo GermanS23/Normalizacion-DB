@@ -265,7 +265,7 @@ FROM jugadores;
 
    ```sql
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_competicion FOREIGN KEY (jug_competicion) REFERENCES competicion(comp_cod);
-   ```sql
+   ```
    
    
    
