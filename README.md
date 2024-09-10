@@ -266,10 +266,43 @@ FROM jugadores;
    ```sql
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_competicion FOREIGN KEY (jug_competicion) REFERENCES competicion(comp_cod);
    ```
+
+
+8. Cambio de los tipos de datos de la tabla principal "jugadores"   
+ 
+    
+   ```sql
+       ALTER TABLE jugadores
+MODIFY jug_mj TINYINT,
+MODIFY jug_str TINYINT,
+MODIFY jug_gls TINYINT,
+MODIFY jug_ast TINYINT,
+MODIFY jug_gls_ast TINYINT,
+MODIFY jug_gls_sinpenales TINYINT,
+MODIFY jug_gl_penales TINYINT,
+MODIFY jug_pen_int_jug TINYINT,
+MODIFY jug_amarillas TINYINT,
+MODIFY jug_rojas TINYINT,
+MODIFY jug_gol_esp_sinpen DECIMAL,
+MODIFY jug_ast_esp DECIMAL,
+MODIFY jug_gol_esp_ast_esp_sinpen DECIMAL,
+MODIFY jug_PrgC DECIMAL,
+MODIFY jug_xG DECIMAL,
+MODIFY jug_xAG DECIMAL,
+MODIFY jug_xGxAG DECIMAL,
+MODIFY jug_npxG DECIMAL,
+MODIFY jug_npxGxAG DECIMAL,
+MODIFY jug_90s INT,
+MODIFY jug_gol_esp INT,
+MODIFY jug_PrgP INT,
+MODIFY jug_PrgR INT,
+MODIFY jug_GAPK INT,
+MODIFY jug_nacimiento YEAR,
+MODIFY jug_edad TINYINT ;
+
    
    
-   
-8. Consultas
+9. Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
