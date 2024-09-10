@@ -243,9 +243,33 @@ FROM jugadores;
    ```sql
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_equipo FOREIGN KEY (jug_equipo) REFERENCES equipos(equip_cod);
    ```
+
+   *Competición*
+
+   ```sql
+       ALTER TABLE jugadores ADD COLUMN jug_competicion_temp INT NOT NULL AFTER jug_equipo;
+   ```
+   
+   ```sql
+       UPDATE jugadores SET jug_competicion_temp = ( SELECT comp_cod FROM competicion
+       WHERE comp_nombre = SUBSTRING_INDEX(jug_competicion, '',-2)where jug_cod > 0;
+   ```
+   
+   ```sql
+       ALTER TABLE jugadores DROP COLUMN jug_competicion;
+   ```
+   
+   ```sql
+       ALTER TABLE jugadores CHANGE jug_competicion_temp jug_competicion INT;
+   ```
+
+   ```sql
+       ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_competicion FOREIGN KEY (jug_competicion) REFERENCES competicion(comp_cod);
+   ```sql
    
    
-9. Consultas
+   
+8. Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
