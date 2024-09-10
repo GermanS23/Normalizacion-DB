@@ -200,47 +200,47 @@ FROM jugadores;
 
     *Nacionalidad*
    
-    ---sql
+    ```sql
        ALTER TABLE jugadores ADD COLUMN jug_nac_temp INT  NOT NULL AFTER jug_nombre;
-    ---sql
+    ```
 
-   ---sql
+   ```sql
        UPDATE jugadores SET jug_nac_temp = (  SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,  LOCATE(' ', jug_nacionalidad)             -1)     )     where jug_cod > 0;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        ALTER TABLE jugadores DROP COLUMN jug_nacionalidad;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        ALTER TABLE jugadores CHANGE jug_nac_temp jug_nacionalidad INT NOT NULL;
-   ---sql
+   ```
 
-   ---sql
+   ```sql
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_nacionalidad FOREIGN KEY (jug_nacionalidad) REFERENCES nacionalidad(nac_cod);
-   ---sql
+   ```
 
    *Equipos*
 
-   ---sql
+   ```sql
        ALTER TABLE jugadores ADD COLUMN jug_equipos_temp INT AFTER jug_posicion;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        UPDATE jugadores SET jug_equipos_temp = ( SELECT equip_cod FROM equipos WHERE equip_nombre = jugadores.jug_equipo) WHERE jug_cod > 0;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        ALTER TABLE jugadores DROP COLUMN jug_equipo;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        ALTER TABLE jugadores CHANGE jug_equipos_temp jug_equipo INT;
-   ---sql
+   ```
    
-   ---sql
+   ```sql
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_equipo FOREIGN KEY (jug_equipo) REFERENCES equipos(equip_cod);
-   ---sql
+   ```
    
    
 9. Consultas
