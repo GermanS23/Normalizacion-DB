@@ -271,7 +271,7 @@ FROM jugadores;
 8. Cambio de los tipos de datos de la tabla principal "jugadores"   
  
     
-   ```sql
+```sql
        ALTER TABLE jugadores
 MODIFY jug_mj TINYINT,
 MODIFY jug_str TINYINT,
@@ -299,7 +299,7 @@ MODIFY jug_PrgR INT,
 MODIFY jug_GAPK INT,
 MODIFY jug_nacimiento YEAR,
 MODIFY jug_edad TINYINT ;
-
+```
    
    
 9. Consultas
