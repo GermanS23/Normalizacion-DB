@@ -172,7 +172,7 @@ FROM jugadores;
         WHERE 
             jug_posicion NOT LIKE '%,%';
 ```
-6. Creación y Modificación de las tablas existentes de la tabla principal jugadores.
+6. Creación y Modificación de la columna existente, de la tabla principal jugadores.
   -  Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio.
   
       ```sql
@@ -195,7 +195,55 @@ FROM jugadores;
       ```sql
         ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
       ```
-7. Consultas
+      
+7. Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
+
+    *Nacionalidad*
+   
+    ---sql
+       ALTER TABLE jugadores ADD COLUMN jug_nac_temp INT  NOT NULL AFTER jug_nombre;
+    ---sql
+
+   ---sql
+       UPDATE jugadores SET jug_nac_temp = (  SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,  LOCATE(' ', jug_nacionalidad)             -1)     )     where jug_cod > 0;
+   ---sql
+   
+   ---sql
+       ALTER TABLE jugadores DROP COLUMN jug_nacionalidad;
+   ---sql
+   
+   ---sql
+       ALTER TABLE jugadores CHANGE jug_nac_temp jug_nacionalidad INT NOT NULL;
+   ---sql
+
+   ---sql
+       ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_nacionalidad FOREIGN KEY (jug_nacionalidad) REFERENCES nacionalidad(nac_cod);
+   ---sql
+
+   *Equipos*
+
+   ---sql
+       ALTER TABLE jugadores ADD COLUMN jug_equipos_temp INT AFTER jug_posicion;
+   ---sql
+   
+   ---sql
+       UPDATE jugadores SET jug_equipos_temp = ( SELECT equip_cod FROM equipos WHERE equip_nombre = jugadores.jug_equipo) WHERE jug_cod > 0;
+   ---sql
+   
+   ---sql
+       ALTER TABLE jugadores DROP COLUMN jug_equipo;
+   ---sql
+   
+   ---sql
+       ALTER TABLE jugadores CHANGE jug_equipos_temp jug_equipo INT;
+   ---sql
+   
+   ---sql
+       ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_equipo FOREIGN KEY (jug_equipo) REFERENCES equipos(equip_cod);
+   ---sql
+   
+   
+9. Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
@@ -213,5 +261,4 @@ FROM jugadores;
             ORDER BY
                 j.jug_cod;
       ```
-
 
