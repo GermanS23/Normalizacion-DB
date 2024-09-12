@@ -19,7 +19,7 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 
 
 ## Diagrama de Relación de Entidad
-![diagrama de relacion de entidad](images/nombre_de_la_imagen.jpg)
+![diagrama de relacion de entidad](images/WhatsApp%20Image%202024-09-12%20at%2012.43.08.jpeg)
 
 
 ## Paso a Paso para la normalización de un archivo csv
