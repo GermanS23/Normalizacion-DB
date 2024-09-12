@@ -18,6 +18,10 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 1- 
 
 
+## Diagrama de Relación de Entidad
+![diagrama de relacion de entidad](images/nombre_de_la_imagen.jpg)
+
+
 ## Paso a Paso para la normalización de un archivo csv
 
 1. Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará:
