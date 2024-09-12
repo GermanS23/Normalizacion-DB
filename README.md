@@ -279,8 +279,6 @@ FROM jugadores;
         MODIFY jug_ast TINYINT,
         MODIFY jug_gls_ast TINYINT,
         MODIFY jug_gls_sinpenales TINYINT,
-```
-```sql
         MODIFY jug_gl_penales TINYINT,
         MODIFY jug_pen_int_jug TINYINT,
         MODIFY jug_amarillas TINYINT,
@@ -293,8 +291,6 @@ FROM jugadores;
         MODIFY jug_xAG DECIMAL,
         MODIFY jug_xGxAG DECIMAL,
         MODIFY jug_npxG DECIMAL,
-```
-```sql
         MODIFY jug_npxGxAG DECIMAL,
         MODIFY jug_90s INT,
         MODIFY jug_gol_esp INT,
