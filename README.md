@@ -271,8 +271,13 @@ FROM jugadores;
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_competicion FOREIGN KEY (jug_competicion) REFERENCES competicion(comp_cod);
    ```
 
+8. Antes de modificar los tipos de datos, verificar que las columnas no contengan valores nulos.
 
-8. Cambio de los tipos de datos de la tabla principal "jugadores"   
+```sql
+    UPDATE jugadores set jug_nacimiento = NULL WHERE jug_nacimiento = "";
+```
+
+9. Cambio de los tipos de datos de la tabla principal "jugadores".
  
     
 ```sql
@@ -306,7 +311,7 @@ FROM jugadores;
 ```
    
    
-9. Consultas
+10. Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
