@@ -282,7 +282,7 @@ FROM jugadores;
    
    ```sql
        UPDATE jugadores SET jug_competicion_temp = ( SELECT comp_cod FROM competicion
-       WHERE comp_nombre = SUBSTRING_INDEX(jug_competicion, '',-2)where jug_cod > 0;
+       WHERE comp_nombre = SUBSTRING_INDEX(jug_competicion, '',-2))where jug_cod > 0;
    ```
    
    ```sql
@@ -297,8 +297,13 @@ FROM jugadores;
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_competicion FOREIGN KEY (jug_competicion) REFERENCES competicion(comp_cod);
    ```
 
+8. Antes de modificar los tipos de datos, verificar que las columnas no contengan valores nulos.
 
-## 4.8 Cambio de los tipos de datos de la tabla principal "jugadores"   
+```sql
+    UPDATE jugadores set jug_nacimiento = NULL WHERE jug_nacimiento = "";
+```
+
+8. Cambio de los tipos de datos de la tabla principal "jugadores"   
  
     
 ```sql
@@ -331,7 +336,8 @@ FROM jugadores;
         MODIFY jug_edad TINYINT ;
 ```
    
- ### Consultas
+   
+9. Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
