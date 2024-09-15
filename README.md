@@ -7,29 +7,55 @@ El presente repositorio contiene la documentación necesaria para la normalizaci
 
 Esta base de datos contiene toda la información sobre todas las estadisticas de la temporada 23/24 de las 5 mejores ligas de fútbol.
 
-## Instalación
+## Tabla de contenidos
+1.[Instalacion (2)](#instalación)
+2.[Uso()](#uso)
+3.[Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
+4.[Paso a Paso para la normalización de un archivo csv o xlsx ](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
 
-1- Clona este repositorio
+
+
+
+
+
+
+## `1. Instalación`
+
+## 1.1 Clona este repositorio.
 ```bash
     git clone https://github.com/GermanS23/Normalizacion-DB.git
  ```
-## Uso
 
-1- 
+## 1.2 Abrir Heidi o MYSQL Workbench.
+Una vez abierto nuestro programa para base de datos, seguir las intrucciones para poder importarla correctamente. <br/>
+**Importante:** Para evitar problemas a la hora de la carga del archivo "ligas.sql", se recomienda tener actualizado su Docker o MYSQL Server a la última versión del mismo, esto con el fin de evitar inconvenientes de compatibilidad.
+
+![inicio de workbench](images/workbench.png)
+
+## 1.3 Importación del archivo ligas.sql (MYSQL Work)
+Después de haber entrado a nuestro lugar de trabajo, nos dirigimos a la parte superior izquierda, en las opciones de file, buscamos la opción **Run SQL Script** y nos aparecerá una interfaz donde deberemos buscar el archivo "liga.sql" en el directorio que hayamos clonado el repositorio.
+
+![importacion](images/importar1.png)
+![importacion](images/importar2.png)
+![importacion](images/importar3.png)
+
+## `2. Uso`
+
+## 2.1 Una vez cargada la base de datos, dirigirse a [Consultas](#consultas).
 
 
-## Diagrama de Relación de Entidad
-![diagrama de relacion de entidad](images/WhatsApp%20Image%202024-09-12%20at%2012.43.08.jpeg)
+## 3. Diagrama de Relación de Entidad
+![diagrama de relacion de entidad](images/top5.png)
 
 
-## Paso a Paso para la normalización de un archivo csv
+## 4. Paso a Paso para la normalización de un archivo csv o xlsx
 
-1. Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará:
+## 4.1 Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará:
 
 https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324
 
 
-2. Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
+## 4.2 Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
     create database ligas;
 ```
@@ -37,7 +63,7 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
     use ligas;
 ```
 
-3. Crear la tabla  principal donde cargaremos todos los datos de nuestro archivo csv
+## 4.3 Crear la tabla  principal donde cargaremos todos los datos de nuestro archivo csv
 
 ```sql
     CREATE TABLE jugadores (
@@ -76,7 +102,7 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
  );
 
 ```
-4. Cargar los datos del archivo csv
+## 4.4 Cargar los datos del archivo csv
 ```sql
 LOAD DATA INFILE 'C:\\ligas\\Gestion-BaseDeDatos.csv'
 INTO TABLE jugadores 
@@ -84,7 +110,7 @@ FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
 ```
-5. Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal *jugadores* e inserción de datos en las tablas 
+## 4.5 Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal **jugadores** e inserción de datos en las tablas 
 
 *Posicion*
 ```sql
@@ -176,7 +202,7 @@ FROM jugadores;
         WHERE 
             jug_posicion NOT LIKE '%,%';
 ```
-6. Creación y Modificación de la columna existente, de la tabla principal jugadores.
+## 4.6 Creación y Modificación de la columna existente, de la tabla principal jugadores.
   -  Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio.
   
       ```sql
@@ -200,7 +226,7 @@ FROM jugadores;
         ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
       ```
       
-7. Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
+## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
 
     *Nacionalidad*
    
@@ -272,7 +298,7 @@ FROM jugadores;
    ```
 
 
-8. Cambio de los tipos de datos de la tabla principal "jugadores"   
+## 4.8 Cambio de los tipos de datos de la tabla principal "jugadores"   
  
     
 ```sql
@@ -305,8 +331,7 @@ FROM jugadores;
         MODIFY jug_edad TINYINT ;
 ```
    
-   
-9. Consultas
+ ### Consultas
   - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
             SELECT 
