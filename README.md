@@ -39,9 +39,16 @@ Después de haber entrado a nuestro lugar de trabajo, nos dirigimos a la parte s
 ![importacion](images/importar2.png)
 ![importacion](images/importar3.png)
 
+**Cargar los pasos siguientes a los ultimos**
+
+## 1.3.5 Importación del archivo ligas.sql (Heidi)
+
+**Cargar los mismos pasos que antes, pero en heidi**
+
+
 ## `2. Uso`
 
-## 2.1 Una vez cargada la base de datos, dirigirse a [Consultas](#consultas).
+## 2.1 Una vez cargada la base de datos, dirigirse a [Consultas](#consultasvistas).
 
 
 ## `3. Diagrama de Relación de Entidad`
@@ -118,6 +125,7 @@ CREATE TABLE posicion(
 pos_cod int not null auto_increment primary key,
 pos_descrip varchar(255) not null
 );
+
 INSERT INTO posicion (pos_descrip)
 SELECT DISTINCT
    	SUBSTRING_INDEX(jug_posicion, ',', -1)
@@ -139,6 +147,7 @@ CREATE TABLE competicion(
 comp_cod int not null auto_increment primary key,
 comp_nombre varchar(255) not null
 );
+
 INSERT INTO competicion (comp_nombre)
 SELECT DISTINCT
    	SUBSTRING_INDEX(jug_competicion, ' ', -2)
@@ -151,6 +160,7 @@ nac_cod int not null auto_increment primary KEY,
 nac_abrev VARCHAR(255) NOT NULL,
 nac_nombre varchar(255) not null
 );
+
 INSERT INTO nacionalidad (nac_abrev, nac_nombre)
 SELECT DISTINCT 
     SUBSTRING(jug_nacionalidad, 1, LOCATE(' ', jug_nacionalidad) - 1) AS abreviatura,
@@ -337,9 +347,10 @@ FROM jugadores;
 ```
    
    
-## `Consultas`
-  - Esta consulta combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
+## `Consultas(Vistas)`
+  - Vista que combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
+            CREATE VIEW AS
             SELECT 
                 j.jug_cod, 
                 j.jug_nombre, 
@@ -356,3 +367,28 @@ FROM jugadores;
                 j.jug_cod;
       ```
 
+    - Vista que muestra los 10 argentinos de las 5 grandes ligas ordenados por goleador.
+    
+    ```sql
+        CREATE VIEW top10_goles_argentinos AS
+        SELECT 
+            j.jug_cod,
+            j.jug_nombre AS Nombre, 
+            j.jug_gls AS Goles,
+            e.equip_nombre AS Equipo,
+            c.comp_nombre AS Competicion 
+        FROM 
+            jugadores j
+        JOIN
+            nacionalidad n ON j.jug_nacionalidad = n.nac_cod
+        JOIN
+            competicion c ON j.jug_competicion = c.comp_cod
+        JOIN 
+            equipos e ON j.jug_equipo = e.equip_cod 
+        WHERE 
+            n.nac_nombre = 'ARG'
+        ORDER BY 
+            j.jug_gls DESC
+        LIMIT 
+            10;
+    ```
