@@ -414,7 +414,7 @@ FROM jugadores;
         GROUP BY
             c.comp_nombre, c.comp_cod;
     ```
-    - Vista que muestra la cantidad de tarjetas rojas de cada competición y el equipo con más tarjetas rojas de su                        competicion correspondiente.
+    - Vista que muestra la cantidad de tarjetas rojas de cada competición y el equipo con más tarjetas rojas de su competición correspondiente.
       
     ```sql
     CREATE VIEW equip_conmax_rojas AS 
@@ -436,3 +436,44 @@ FROM jugadores;
     GROUP BY
         c.comp_nombre, c.comp_cod;
     ```
+    - Vista que muestra los primeros 10 jugadores no delanteros con mas goles convertidos en las 5 ligas.
+    
+    ```sql
+    CREATE VIEW jugnodl_mas_gls AS 
+    SELECT 
+    j.jug_nombre AS Nombre,
+    j.jug_gls AS Goles,
+    c.comp_nombre AS Liga,
+    e.equip_nombre AS Equipo,
+    j.jug_edad AS Edad,
+    p.pos_descrip AS Posicion,
+    n.nac_nombre AS Nacionalidad
+    FROM jugadores j
+    JOIN competicion c ON j.jug_competicion = c.comp_cod
+    JOIN posicion p ON j.jug_posicion = p.pos_cod
+    JOIN nacionalidad n ON j.jug_nacionalidad = n.nac_cod
+    JOIN equipos e ON j.jug_equipo = e.equip_cod
+    WHERE NOT p.pos_descrip = "FW"
+    ORDER BY j.jug_gls DESC
+    LIMIT 1,10;
+    ```
+    
+    - Vista indica el maximo asistidor de la Ligue 1
+
+   ```sql
+    CREATE VIEW max_ast_ligue1 AS 
+    SELECT 
+    j.jug_nombre AS Nombre,
+    j.jug_ast AS Asistencias,
+    c.comp_nombre AS Liga,
+    j.jug_edad AS Edad,
+    p.pos_descrip AS posicion,
+    n.nac_nombre AS Nacionalidad
+    FROM jugadores j
+    JOIN competicion c ON j.jug_competicion = c.comp_cod
+    JOIN posicion p ON j.jug_posicion = p.pos_cod
+    JOIN nacionalidad n ON j.jug_nacionalidad = n.nac_cod
+    WHERE c.comp_nombre = "Ligue 1"
+    ORDER BY j.jug_ast DESC 
+    LIMIT 1;
+   ```
