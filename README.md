@@ -392,3 +392,47 @@ FROM jugadores;
         LIMIT 
             10;
     ```
+    - Vista que muestra la cantidad de tarjetas amarillas de cada competición y el equipo con más tarjetas amarillas de su                competicion correspondiente.
+    
+    ```sql
+        CREATE VIEW cant_amarillas_ligaequip AS 
+        SELECT
+            c.comp_nombre AS Liga,
+            SUM(j.jug_amarillas) AS TotalAmarillas,
+            (
+                SELECT CONCAT(e2.equip_nombre, ' (', SUM(j2.jug_amarillas), ')')
+                FROM jugadores j2
+                JOIN equipos e2 ON j2.jug_equipo = e2.equip_cod
+                WHERE j2.jug_competicion = c.comp_cod
+                GROUP BY e2.equip_nombre
+                ORDER BY SUM(j2.jug_amarillas) DESC
+                LIMIT 1
+            ) AS EquipoConMasAmarillas
+        FROM
+            jugadores j
+        JOIN competicion c ON j.jug_competicion = c.comp_cod
+        GROUP BY
+            c.comp_nombre, c.comp_cod;
+    ```
+    - Vista que muestra la cantidad de tarjetas rojas de cada competición y el equipo con más tarjetas rojas de su                        competicion correspondiente.
+      
+    ```sql
+    CREATE VIEW equip_conmax_rojas AS 
+    SELECT
+        c.comp_nombre AS Liga,
+        SUM(j.jug_rojas) AS TotalRojas,
+        (
+            SELECT CONCAT(e2.equip_nombre, ' (', SUM(j2.jug_rojas), ')')
+            FROM jugadores j2
+            JOIN equipos e2 ON j2.jug_equipo = e2.equip_cod
+            WHERE j2.jug_competicion = c.comp_cod
+            GROUP BY e2.equip_nombre
+            ORDER BY SUM(j2.jug_rojas) DESC
+            LIMIT 1
+        ) AS EquipoConMasRojas
+    FROM
+        jugadores j
+    JOIN competicion c ON j.jug_competicion = c.comp_cod
+    GROUP BY
+        c.comp_nombre, c.comp_cod;
+    ```
