@@ -101,7 +101,7 @@ https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-l
  jug_PrgC VARCHAR(255)NOT NULL,
  jug_PrgP VARCHAR(255) NOT NULL,
  jug_PrgR VARCHAR(255) NOT NULL,
- jug_rGls_90VARCHAR(255) NOT NULL,
+ jug_rGls_90 VARCHAR(255) NOT NULL,
  jug_rAst_90 VARCHAR(255) NOT NULL,
  jug_rGA_90 VARCHAR(255) NOT NULL,
  jug_rGPK_90 VARCHAR(255) NOT NULL,
