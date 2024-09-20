@@ -475,7 +475,7 @@ FROM jugadores;
     
     - Vista indica el maximo asistidor de la Ligue 1
 
-   ```sql
+    ```sql
     CREATE VIEW max_ast_ligue1 AS 
     SELECT 
     j.jug_nombre AS Nombre,
@@ -491,4 +491,4 @@ FROM jugadores;
     WHERE c.comp_nombre = "Ligue 1"
     ORDER BY j.jug_ast DESC 
     LIMIT 1;
-   ```
+    ```
