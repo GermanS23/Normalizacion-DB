@@ -241,8 +241,8 @@ FROM jugadores;
         ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
       ```
       
-## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
-
+## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición.
+-
     *Nacionalidad*
    
     ```sql
