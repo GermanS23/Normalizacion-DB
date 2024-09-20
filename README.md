@@ -325,6 +325,7 @@ FROM jugadores;
         ALTER TABLE jugadores
         MODIFY jug_mj TINYINT,
         MODIFY jug_str TINYINT,
+        MODIFY jug_min INT,
         MODIFY jug_gls TINYINT,
         MODIFY jug_ast TINYINT,
         MODIFY jug_gls_ast TINYINT,
@@ -342,6 +343,10 @@ FROM jugadores;
         MODIFY jug_xGxAG DECIMAL,
         MODIFY jug_npxG DECIMAL,
         MODIFY jug_npxGxAG DECIMAL,
+        MODIFY jug_rGls_90,
+        MODIFY jug_rAst_90,
+        MODIFY jug_rGA_90,
+        MODIFY jug_rGPK_90,
         MODIFY jug_90s INT,
         MODIFY jug_gol_esp INT,
         MODIFY jug_PrgP INT,
