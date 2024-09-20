@@ -296,8 +296,13 @@ FROM jugadores;
    ```
    
    ```sql
-       UPDATE jugadores SET jug_competicion_temp = ( SELECT comp_cod FROM competicion
-       WHERE comp_nombre = SUBSTRING_INDEX(jug_competicion, '',-2))where jug_cod > 0;
+      UPDATE jugadores j
+        SET  j.jug_competicion_temp = ( 
+        	SELECT c.comp_cod 
+        	FROM competicion c
+        	WHERE c.comp_nombre = SUBSTRING_INDEX( j.jug_competicion, ' ', -2)
+        )
+        WHERE j.jug_cod > 0;
    ```
    
    ```sql
