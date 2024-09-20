@@ -365,7 +365,7 @@ FROM jugadores;
 ## `Consultas(Vistas)`
   - Vista que combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
-            CREATE VIEW AS
+            CREATE VIEW posicion_jugador AS
             SELECT 
                 j.jug_cod, 
                 j.jug_nombre, 
