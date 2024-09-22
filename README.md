@@ -87,12 +87,13 @@ En caso de querer trabajar con un archivo "XLSX", primero debera convertirlo a C
  jug_nacimiento VARCHAR(255) NOT NULL,
  jug_mj VARCHAR(255) NOT NULL,
  jug_str VARCHAR(255) NOT NULL,
+ jug_min VARCHAR(255) NOT NULL,
  jug_90s VARCHAR(255) NOT NULL,
  jug_gls VARCHAR(255) NOT NULL,
  jug_ast VARCHAR(255) NOT NULL,
  jug_gls_ast VARCHAR(255) NOT NULL,
  jug_gls_sinpenales VARCHAR(255) NOT NULL,
- jug_gl_penales VARCHAR(255) NOT NULL,
+ jug_gls_penales VARCHAR(255) NOT NULL,
  jug_pen_int_jug VARCHAR(255) NOT NULL,
  jug_amarillas VARCHAR(255) NOT NULL,
  jug_rojas VARCHAR(255) NOT NULL,
@@ -103,6 +104,10 @@ En caso de querer trabajar con un archivo "XLSX", primero debera convertirlo a C
  jug_PrgC VARCHAR(255)NOT NULL,
  jug_PrgP VARCHAR(255) NOT NULL,
  jug_PrgR VARCHAR(255) NOT NULL,
+ jug_rGls_90 VARCHAR(255) NOT NULL,
+ jug_rAst_90 VARCHAR(255) NOT NULL,
+ jug_rGA_90 VARCHAR(255) NOT NULL,
+ jug_rGPK_90 VARCHAR(255) NOT NULL,
  jug_GAPK VARCHAR(255) NOT NULL,
  jug_xG VARCHAR(255) NOT NULL,
  jug_xAG VARCHAR(255) NOT NULL,
@@ -239,11 +244,11 @@ FROM jugadores;
         ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
       ```
       
-## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición.
+## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
 
-**Nacionalidad**
-
-```sql
+    *Nacionalidad*
+   
+    ```sql
        ALTER TABLE jugadores ADD COLUMN jug_nac_temp INT  NOT NULL AFTER jug_nombre;
  ```
 
@@ -294,8 +299,13 @@ FROM jugadores;
    ```
    
    ```sql
-       UPDATE jugadores SET jug_competicion_temp = ( SELECT comp_cod FROM competicion
-       WHERE comp_nombre = SUBSTRING_INDEX(jug_competicion, '',-2))where jug_cod > 0;
+      UPDATE jugadores j
+        SET  j.jug_competicion_temp = ( 
+        	SELECT c.comp_cod 
+        	FROM competicion c
+        	WHERE c.comp_nombre = SUBSTRING_INDEX( j.jug_competicion, ' ', -2)
+        )
+        WHERE j.jug_cod > 0;
    ```
    
    ```sql
@@ -324,6 +334,7 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
         ALTER TABLE jugadores
         MODIFY jug_mj TINYINT,
         MODIFY jug_str TINYINT,
+        MODIFY jug_min INT,
         MODIFY jug_gls TINYINT,
         MODIFY jug_ast TINYINT,
         MODIFY jug_gls_ast TINYINT,
@@ -341,6 +352,10 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
         MODIFY jug_xGxAG DECIMAL,
         MODIFY jug_npxG DECIMAL,
         MODIFY jug_npxGxAG DECIMAL,
+        MODIFY jug_rGls_90 DECIMAL,
+        MODIFY jug_rAst_90 DECIMAL,
+        MODIFY jug_rGA_90 DECIMAL,
+        MODIFY jug_rGPK_90 DECIMAL,
         MODIFY jug_90s INT,
         MODIFY jug_gol_esp INT,
         MODIFY jug_PrgP INT,
@@ -354,7 +369,7 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
 ## `Consultas(Vistas)`
   - Vista que combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
        ```sql 
-            CREATE VIEW AS
+            CREATE VIEW posicion_jugador AS
             SELECT 
                 j.jug_cod, 
                 j.jug_nombre, 
@@ -396,25 +411,3 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
         LIMIT 
             10;
     ```
-
-    - S
-    ```sql
-
-    ```
-    - S
-    ```sql
-
-    ```
-    - S
-    ```sql
-
-    ```
-    - S
-     ```sql
-
-    ```   
-    - S
-    ```sql
-
-    ```
-    - S
