@@ -8,10 +8,10 @@ El presente repositorio contiene la documentación necesaria para la normalizaci
 Esta base de datos contiene toda la información sobre todas las estadisticas de la temporada 23/24 de las 5 mejores ligas de fútbol.
 
 ## Tabla de contenidos
-1.[Instalacion (2)](#instalación)
-2.[Uso()](#uso)
-3.[Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
-4.[Paso a Paso para la normalización de un archivo csv o xlsx ](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
+1. [Instalacion (2)](#instalación)
+2. [Uso()](#uso)
+3. [Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
+4. [Paso a Paso para la normalización de un archivo csv o xlsx ](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
 
 
 
@@ -33,34 +33,37 @@ Una vez abierto nuestro programa para base de datos, seguir las intrucciones par
 ![inicio de workbench](images/workbench.png)
 
 ## 1.3 Importación del archivo ligas.sql (MYSQL Work)
-Después de haber entrado a nuestro lugar de trabajo, nos dirigimos a la parte superior izquierda, en las opciones de file, buscamos la opción **Run SQL Script** y nos aparecerá una interfaz donde deberemos buscar el archivo "liga.sql" en el directorio que hayamos clonado el repositorio.
+Después de haber entrado a nuestro lugar de trabajo, nos dirigimos a la parte superior izquierda, en las opciones de file, buscamos la opción **Open SQL Script** y nos aparecerá una interfaz donde deberemos buscar el archivo "liga.sql" en el directorio que hayamos clonado el repositorio, para finalizar le damos "run" al script que nos aparecerá, y tendremos la base de datos cargada.
 
-![importacion](images/importar1.png)
+![importacion](images/work2.png)
 ![importacion](images/importar2.png)
-![importacion](images/importar3.png)
+![importacion](images/work3.png)
 
-**Cargar los pasos siguientes a los ultimos**
 
 ## 1.3.5 Importación del archivo ligas.sql (Heidi)
+Siguiendo los mismos pasos al igual que con Workbench, buscaremos la opción **Cargar archivo SQL**, buscaremos en el directorio que clonamos este repositorio el archivo .sql, lo seleccionaremos, y nos creará todo el script que al darle **Run** nos cargará la base de datos.
 
-**Cargar los mismos pasos que antes, pero en heidi**
-
+![importacion](images/heidi1.jpeg)
+![importacion](images/heidi2.jpeg)
+![importacion](images/heidi3.jpeg)
+![importacion](images/heidi4.jpeg)
 
 ## `2. Uso`
 
 ## 2.1 Una vez cargada la base de datos, dirigirse a [Consultas](#consultasvistas).
+Al dirigirnos a la sección [Consultas](#consultasvistas) , se podrá realizar pruebas para comprobar que la base de datos funcione y se haya cargado correctamente.
 
 
 ## `3. Diagrama de Relación de Entidad`
-![diagrama de relacion de entidad](images/top5.png)
+![diagrama de relacion de entidad](images/diagramaligas.png)
 
 
 ## `4. Paso a Paso para la normalización de un archivo csv o xlsx`
 
 ## 4.1 Seleccionar el dataset que queramos normalizar, en formato csv o xlsx, en este caso se utilizará:
 
-https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324
-
+https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324 <br>
+En caso de querer trabajar con un archivo "XLSX", primero debera convertirlo a CSV.
 
 ## 4.2 Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
@@ -117,9 +120,9 @@ FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
 ```
-## 4.5 Crear las entidades que tendrá nuestra base de datos, partiendo de la tabla principal **jugadores** e inserción de datos en las tablas 
+## 4.5 Crear las tablas que tendrá nuestra base de datos, a partir de las entidades que podamos observar de nuestra tabla principal **jugadores** , para después realizar la inserción de datos en las tablas.
 
-*Posicion*
+**Posicion**
 ```sql
 CREATE TABLE posicion(
 pos_cod int not null auto_increment primary key,
@@ -131,7 +134,7 @@ SELECT DISTINCT
    	SUBSTRING_INDEX(jug_posicion, ',', -1)
 FROM jugadores;
 ```
-*Equipos*
+**Equipos**
 ```sql
 CREATE TABLE equipos(
 equip_cod int not null auto_increment primary key,
@@ -141,7 +144,7 @@ INSERT INTO equipos (equip_nombre)
 SELECT DISTINCT jug_equipo FROM jugadores;
 );
 ```
-*Competicion*
+**Competicion**
 ```sql
 CREATE TABLE competicion(
 comp_cod int not null auto_increment primary key,
@@ -153,7 +156,7 @@ SELECT DISTINCT
    	SUBSTRING_INDEX(jug_competicion, ' ', -2)
 FROM jugadores;
 ```
-*Nacionalidad*
+**Nacionalidad**
 ```sql
 CREATE TABLE nacionalidad(
 nac_cod int not null auto_increment primary KEY,
@@ -168,7 +171,7 @@ SELECT DISTINCT
 FROM jugadores;
 ```
 
-*Tabla intermedio para la relación de muchos a muchos entre Jugadores y Posicion*
+**Tabla intermedio para la relación de muchos a muchos entre Jugadores y Posicion**
 ```sql
     CREATE TABLE jugador_posicion (
     jp_jug_cod INT NOT NULL,
@@ -179,7 +182,7 @@ FROM jugadores;
 );
 ```
 
-*Carga de datos a la tabla intermedio, con el objetivo de que se carguen los codigos del jugador y las distintas posiciones que tenga"
+**Carga de datos a la tabla intermedio, con el objetivo de que se carguen los codigos del jugador y las distintas posiciones que tenga**
 ```sql
     INSERT INTO jugador_posicion (jp_jug_cod, jp_pos_cod)
         SELECT 
@@ -216,7 +219,7 @@ FROM jugadores;
   -  Creación de una tabla temporal para almacenar los datos de las posiciones de los jugadores, sacandolo de la tabla intermedio.
   
       ```sql
-      ALTER TABLE jugadores ADD COLUMN jug_pos_temp VARCHAR(255) after jug_nacionalidad;
+        ALTER TABLE jugadores ADD COLUMN jug_pos_temp VARCHAR(255) after jug_nacionalidad;
       ```
   - Carga de datos a la tabla temporal
        ```sql
@@ -236,13 +239,13 @@ FROM jugadores;
         ALTER TABLE jugadores CHANGE jug_pos_temp jug_posicion VARCHAR(255)
       ```
       
-## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
+## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición.
 
-    *Nacionalidad*
-   
-    ```sql
+**Nacionalidad**
+
+```sql
        ALTER TABLE jugadores ADD COLUMN jug_nac_temp INT  NOT NULL AFTER jug_nombre;
-    ```
+ ```
 
    ```sql
        UPDATE jugadores SET jug_nac_temp = (SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,
@@ -261,7 +264,7 @@ FROM jugadores;
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_nacionalidad FOREIGN KEY (jug_nacionalidad) REFERENCES nacionalidad(nac_cod);
    ```
 
-   *Equipos*
+   **Equipos**
 
    ```sql
        ALTER TABLE jugadores ADD COLUMN jug_equipos_temp INT AFTER jug_posicion;
@@ -284,7 +287,7 @@ FROM jugadores;
        ALTER TABLE jugadores ADD CONSTRAINT fk_jugadores_equipo FOREIGN KEY (jug_equipo) REFERENCES equipos(equip_cod);
    ```
 
-   *Competición*
+   **Competición**
 
    ```sql
        ALTER TABLE jugadores ADD COLUMN jug_competicion_temp INT NOT NULL AFTER jug_equipo;
@@ -308,6 +311,7 @@ FROM jugadores;
    ```
 
 ## 4.8 Antes de modificar los tipos de datos, verificar que las columnas no contengan valores nulos.
+Se tendría que modificar el "jug_nacimiento" por la columna que queramos comprobar que no contengan valores nulos.
 
 ```sql
     UPDATE jugadores set jug_nacimiento = NULL WHERE jug_nacimiento = "";
@@ -392,3 +396,25 @@ FROM jugadores;
         LIMIT 
             10;
     ```
+
+    - S
+    ```sql
+
+    ```
+    - S
+    ```sql
+
+    ```
+    - S
+    ```sql
+
+    ```
+    - S
+     ```sql
+
+    ```   
+    - S
+    ```sql
+
+    ```
+    - S
