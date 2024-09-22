@@ -8,10 +8,11 @@ El presente repositorio contiene la documentación necesaria para la normalizaci
 Esta base de datos contiene toda la información sobre todas las estadisticas de la temporada 23/24 de las 5 mejores ligas de fútbol.
 
 ## Tabla de contenidos
-1. [Instalacion (2)](#instalación)
-2. [Uso()](#uso)
+1. [Instalacion (3)](#instalación)
+2. [Uso(1)](#uso)
 3. [Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
-4. [Paso a Paso para la normalización de un archivo csv o xlsx ](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
+4. [Paso a Paso para la normalización de un archivo csv o xlsx (9)](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
+5. [Consultas](#consultasvistas)
 
 
 
