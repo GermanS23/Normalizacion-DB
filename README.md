@@ -56,7 +56,7 @@ Al dirigirnos a la sección [Consultas](#consultasvistas) , se podrá realizar p
 
 
 ## `3. Diagrama de Relación de Entidad`
-![diagrama de relacion de entidad](images/diagramaligas.png)
+![diagrama de relacion de entidad](images/diagrama%20futbol.jpeg)
 
 
 ## `4. Paso a Paso para la normalización de un archivo csv o xlsx`
