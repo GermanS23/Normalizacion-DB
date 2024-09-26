@@ -13,6 +13,9 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 3. [Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
 4. [Paso a Paso para la normalización de un archivo csv o xlsx (9)](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
 5. [Consultas](#consultasvistas)
+6. [Conclusión](#conclusión)
+7. [Bibliografía](#bibliografía)
+
 
 
 
@@ -247,11 +250,10 @@ FROM jugadores;
       
 ## 4.7 Se repite el mismo procedimiento para las tablas, nacionalidad, equipos y competición
 
-    *Nacionalidad*
-   
-    ```sql
+*Nacionalidad*   
+```sql
        ALTER TABLE jugadores ADD COLUMN jug_nac_temp INT  NOT NULL AFTER jug_nombre;
- ```
+```
 
    ```sql
        UPDATE jugadores SET jug_nac_temp = (SELECT nac_cod FROM nacionalidad WHERE nac_abrev = SUBSTRING(jug_nacionalidad, 1,
@@ -497,3 +499,16 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
     ORDER BY j.jug_ast DESC 
     LIMIT 1;
     ```
+## `Conclusión`
+
+Como conclusión, la realización del trabajo tuvo sus dificultades, no tanto en la comunicación y organización para la elaboración, sino en cuento a problemas generados por los softwares que ocupamos, Heidi, MySQL Workbench, XAMP, Docker. <br>
+Agregar también que tuvimos que crear 10 veces la base de datos, con sus relaciones y tablas, porque comandos como el de crear posiciones y competicion, la tabla intermedia entre jugadores y posicion, la inserción de datos en diversas tablas. <br>
+Aun y con todos los problemas a lo largo del proyecto, se pudo cumplir con el tiempo de entrega y con el aprendizaje de todo lo dado.
+
+
+
+
+
+## `Bibliografía`
+
+- Todos los comandos y como se utilizan fueron buscados en: https://www.w3schools.com/sql/default.asp
