@@ -69,7 +69,7 @@ Al dirigirnos a la sección [Consultas](#consultasvistas) , se podrá realizar p
 https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324 <br>
 En caso de querer trabajar con un archivo "XLSX", primero debera convertirlo a CSV.
 
-## 4.2 Dirigirnos a nuestro lugar de trabajo, puede ser Headi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
+## 4.2 Dirigirnos a nuestro lugar de trabajo, puede ser Heidi o MySQLWorkbench, donde crearemos y utilizaremos una nueva base de datos, realizando:
 ```sql
     create database ligas;
 ```
