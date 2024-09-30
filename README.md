@@ -15,7 +15,7 @@ Esta base de datos contiene toda la información sobre todas las estadisticas de
 1. [Instalacion (3)](#instalación)
 2. [Uso(1)](#uso)
 3. [Diagrama de Relacion de Entidad](#diagrama-de-relación-de-entidad)
-4. [Paso a Paso para la normalización de un archivo csv o xlsx (9)](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
+4. [Paso a Paso para la normalización de un archivo csv o xlsx (10)](#paso-a-paso-para-la-normalización-de-un-archivo-csv-o-xlsx)
 5. [Consultas](#consultasvistas)
 6. [Conclusión](#conclusión)
 7. [Bibliografía](#bibliografía)
@@ -371,7 +371,14 @@ Se tendría que modificar el "jug_nacimiento" por la columna que queramos compro
         MODIFY jug_nacimiento YEAR,
         MODIFY jug_edad TINYINT ;
 ```
-   
+## 4.10 Exportar la tabla normalizada 
+Una vez normalizado nuestro archivo csv, quedaría exportar nuestra base de datos a un archivo .sql, para que quien quisieramos pueda utilizarla. <br>
+Esto se realiza yendo a las opciones **Herramientas**, después **Exportar base de datos a archivo sql**, seleccionar los tildes **crear** si no lo estan y darle **exportar**
+
+![importacion](images/heidiexport.jpeg)
+![importacion](images/heidiexport2.jpeg)
+
+    
    
 ## `Consultas(Vistas)`
   - Vista que combina las tablas jugadores, jugador_posicion y posicion para mostrar el código del jugador, el nombre del jugador y la lista de posiciones, ordenados por jug_cod.
@@ -516,3 +523,4 @@ Aun y con todos los problemas a lo largo del proyecto, se pudo cumplir con el ti
 ## `Bibliografía`
 
 - Todos los comandos y como se utilizan fueron buscados en: https://www.w3schools.com/sql/default.asp
+- Archivo .csv: https://www.kaggle.com/datasets/orkunaktas/all-football-players-stats-in-top-5-leagues-2324 
